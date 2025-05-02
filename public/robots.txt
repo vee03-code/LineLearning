@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://linelearning.pages.dev/sitemap.xml
