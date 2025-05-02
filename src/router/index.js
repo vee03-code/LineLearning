@@ -10,7 +10,7 @@ import ManchesterPage from '@/components/ManchesterPage.vue'
 import DiffManchesterPage from '@/components/DiffManchesterPage.vue'
 import NotFound  from '@/components/NotFound.vue'
 
-const routes = [
+export const routes = [
   {
     path: '/',
     name: 'Home',
