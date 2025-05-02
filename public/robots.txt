@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://linelearning.pages.dev/sitemap.xml
+Sitemap: https://linelearning.pages.dev/sitemap-index.xml
