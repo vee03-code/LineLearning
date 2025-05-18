@@ -247,6 +247,7 @@
           </select>
         </div>
       </div>
+      
       <table class="compare-table">
         <thead>
           <tr>
@@ -1501,6 +1502,9 @@ button{
   .waveform-container canvas {
     width: 100% !important;
     height: auto !important;
+  }
+  .comparison-section{
+    width: fit-content;
   }
 }
 </style>
