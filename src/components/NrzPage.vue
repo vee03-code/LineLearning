@@ -26,6 +26,7 @@
         <li>Unipolar such as NRZ (Non-Return-to-Zero)</li>
         <li>Polar</li>
         <li>Bipolar</li>
+        <li>Multilevel</li>
       </ul>
       <h2>Unipolar</h2>
       <p>In Unipolar encoding, only one polarity is used i.e., bit 1 is used to represent positive voltage and bit 0 is used to represent zero voltage or idle line. 

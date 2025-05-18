@@ -10,7 +10,7 @@
       </div>
       <!-- Slide 1: Unipolar -->
       <div class="mySlides fade" :style="{ display: currentSlide === 0 ? 'block' : 'none' }">
-        <div class="numbertext">1 / 3</div>
+        <div class="numbertext">1 / 4</div>
         <div class="slide-content">
           <div class="logoTitle">
             <h2>Unipolar</h2>
@@ -28,7 +28,7 @@
       </div>
       <!-- Slide 2: Polar -->
       <div class="mySlides fade" :style="{ display: currentSlide === 1 ? 'block' : 'none' }">
-        <div class="numbertext">2 / 3</div>
+        <div class="numbertext">2 / 4</div>
         <div class="slide-content">
           <div class="logoTitle">
             <h2>Polar</h2>
@@ -45,7 +45,7 @@
       </div>
       <!-- Slide 3: Bipolar -->
       <div class="mySlides fade" :style="{ display: currentSlide === 2 ? 'block' : 'none' }">
-        <div class="numbertext">3 / 3</div>
+        <div class="numbertext">3 / 4</div>
         <div class="slide-content">
           <div class="logoTitle">
             <h2>Bipolar</h2>
@@ -60,6 +60,23 @@
           <p><strong>Example:</strong> AMI, Pseudoternary</p>
         </div>
       </div>
+      <!-- Slide 4: Multilevel (PAM-4) -->  
+   <div class="mySlides fade" :style="{ display: currentSlide === 3 ? 'block' : 'none' }">  
+      <div class="numbertext">4 / 4</div>  
+      <div class="slide-content">  
+        <div class="logoTitle">  
+          <h2>Multilevel</h2>  
+          <div class="slide-header">  
+            <img src="@/assets/logo.png" alt="LineLearning Logo" class="slide-logo" />  
+          </div>  
+        </div>  
+        <p>
+          Multilevel line coding uses more than two amplitude levels per symbol.
+          for example , PAM-4 encodes 2 bits per symbol.
+        </p>
+        <p><strong>Example:</strong> PAM-4 (100Gbps per lane)</p> 
+      </div>  
+    </div>  
       <!-- Next and previous arrows -->
       <a class="prev" @click="plusSlides(-1)">&#10094;</a>
       <a class="next" @click="plusSlides(1)">&#10095;</a>
@@ -70,6 +87,8 @@
       <span class="dot" :class="{ active: currentSlide === 0 }" @click="currentSlide = 0"></span>
       <span class="dot" :class="{ active: currentSlide === 1 }" @click="currentSlide = 1"></span>
       <span class="dot" :class="{ active: currentSlide === 2 }" @click="currentSlide = 2"></span>
+      <span class="dot" :class="{ active: currentSlide === 3 }" @click="currentSlide = 3"></span>  
+
     </div>
 
     <!-- VISUALIZER SECTION -->
@@ -96,16 +115,36 @@
               <option value="Manchester">Manchester</option>
               <option value="AMI">AMI</option>
               <option value="Differential Manchester">Differential Manchester</option>
+              <option value="PAM4">PAM‑4 (100Gbps)</option>  
             </select>
           </div>
           <div class="input-item">
-            <label for="bitPeriod">Bit Period 1-1000(ms)</label>
-            <input id="bitPeriod" v-model.number="bitPeriod" type="number" placeholder="Bit Period" min="0.1" max="10" step="0.1" />
+            <label for="bitPeriod">
+       {{ method === 'PAM4' ? 'Bit Period (ps)' : 'Bit Period 1-1000 (ms)' }}
+      </label> 
+           <input
+       id="bitPeriod"
+        v-model.number="bitPeriod"
+        type="number"
+        :min="method === 'PAM4' ? 9.4 : 0.1"
+        :max="method === 'PAM4' ? 9.4 : 1000"
+        :step="method === 'PAM4' ? 0 : 0.1"
+        :disabled="disableBitPeriodInput"
+      />
           </div>
           <div class="input-item">
-            <label for="voltage">Voltage 0.5-5(V)</label>
-            <input id="voltage" v-model.number="voltage" type="number" placeholder="Max Voltage" min="0.5" max="5" step="0.5" />
-          </div>
+<label for="voltage">
+  {{ method === 'PAM4' ? 'Voltage (mV)' : 'Voltage 0.5-5 (V)' }}
+</label>
+            <input
+    id="voltage"
+    v-model.number="voltage"
+    type="number"
+    :min="method === 'PAM4' ? 5 : 0.5"
+    :max="method === 'PAM4' ? 5 : 5"
+    :step="method === 'PAM4' ? 0 : 0.5"
+    :disabled="disableVoltageInput"
+  />
         </div>
       </div>
 
@@ -123,12 +162,14 @@
             <router-link v-else-if="currentMethod === 'AMI'" to="/ami">Learn More about AMI</router-link>
             <router-link v-else-if="currentMethod === 'Manchester'" to="/manchester">Learn More about Manchester</router-link>
             <router-link v-else-if="currentMethod === 'Differential Manchester'" to="/differential-manchester">Learn More about Differential Manchester</router-link>
+            <router-link v-else-if="currentMethod === 'PAM4'" to="/PAM4">Learn More about PAM‑4 100Gbps</router-link>  
+
           </li>
         </ul>
       </div>
 
       <div v-if="bandwidth">
-        <p><strong>Bandwidth:</strong> {{ bandwidth }}</p>
+        <p><strong>Minimum Bandwidth required:</strong> {{ bandwidth }}</p>
       </div>
 
       <!-- Canvas for the waveform -->
@@ -268,6 +309,7 @@
       </table>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -285,6 +327,10 @@ export default {
       waveform: [],
       teaching: null,
       bandwidth: "",
+      defaultBitPeriod: 1,   // 1 ms
+    defaultVoltage:    5,  // 5 V
+    disableBitPeriodInput: false,
+    disableVoltageInput:   false, 
       // Teaching content from backend (replicated)
       teachingContent: {
         NRZ: {
@@ -337,6 +383,16 @@ export default {
             "Requires 2× the bandwidth of NRZ",
           ],
         },
+        PAM4: {  
+          description:  
+            "PAM-4 100Gbps uses four amplitude levels per symbol (–5 mV, –1.5 mV, +1.5 mV, +5 mV) to encode 2 bits/symbol at 53.125 GBd to use it in IEEE 802.3df.",  
+          keyFeatures: [  
+            "Fixed bit period = 9.4 ps; symbol period = 18.8 ps",  
+            "Bandwidth ≈ 0.5 × symbol rate → 26.6 GHz per lane",  
+            "Doubles data rate vs NRZ at same baud rate",  
+            "Adds SNR penalty (~9.5 dB) vs NRZ"  
+          ],  
+        },  
       },
       // Comparison data and options for comparison section:
       selectedMethod1: "NRZ",
@@ -347,6 +403,7 @@ export default {
         { value: "Manchester", label: "Manchester (Polar)" },
         { value: "Differential Manchester", label: "Diff Manchester (Polar)" },
         { value: "AMI", label: "AMI (Bipolar)" },
+        { value: "PAM4", label: "PAM‑4 (Multilevel)" }  
       ],
       compareData: {
         NRZ: {
@@ -390,6 +447,7 @@ export default {
             "Requires double the bandwidth of NRZ",
           ],
         },
+
         "Differential Manchester": {
           polarity: "Polar",
           description: "Always a mid-bit transition; presence/absence of transition at start indicates bit=0 or 1.",
@@ -417,6 +475,23 @@ export default {
             "Sync can fail if consecutive zeros are too long",
           ],
         },
+     
+      PAM4: {  
+         polarity: "Multilevel (4 levels)",  
+          description:  
+            "PAM-4 100Gbps (IEEE 802.3df) encodes 2 bits/symbol using ±5 mV & ±1.5 mV levels.",  
+          bandwidth: "0.5 × (1/(2×9.4 ps)) ≈ 26.56 GHz",  
+          advantages: [  
+            "100 Gb/s per lane → 800 Gb/s with 8 lanes",  
+            "Doubles data throughput at same baud rate",  
+            "Supported by robust FEC (RS codes)"  
+          ],  
+          disadvantages: [  
+            "≈9.5 dB SNR penalty vs NRZ",  
+            "Complex transmitter/receiver design",  
+            "Higher power & signal integrity demands"  
+          ]  
+        },  
       },
       showPdfDialog: false,
     };
@@ -434,10 +509,19 @@ export default {
   watch: {
     binaryData() {
       this.saveData();
-    },
-    method() {
+    },method(newM) {  
       this.saveData();
-    },
+    if (newM === "PAM4") {  
+      this.bitPeriod=9.4
+      this.voltage=5
+      this.disableBitPeriodInput = true;  
+        this.disableVoltageInput = true;  
+      } else {  
+        this.bitPeriod = this.defaultBitPeriod;  
+        this.voltage = this.defaultVoltage
+        this.disableBitPeriodInput = false;  
+        this.disableVoltageInput = false;  
+      } },
     bitPeriod() {
       this.saveData();
     },
@@ -525,24 +609,53 @@ export default {
           }
         });
       }
-      return waveform;
+      else if (method === "PAM4") {
+    // 1) pad to even length
+    if (binaryData.length % 2 !== 0) {
+      binaryData+="0";
+    }
+    // 2) symbol→mV mapping
+    const levels = {
+      "00": -5,
+      "01": -1.5,
+      "10":  1.5,
+      "11":  5
+    };
+    // 3) how many raw samples per symbol?
+    const samplesPerSymbol = Math.max(1, Math.round(samplesPerBit * 2));
+    // 4) build waveform
+    for (let i = 0; i < binaryData.length; i += 2) {
+      const sym = binaryData[i] + binaryData[i+1];
+      const mv  = levels[sym] ?? 0;
+      // push that mV value samplesPerSymbol times
+      for (let k = 0; k < samplesPerSymbol; k++) {
+        waveform.push(mv);
+      }
+    }
+
+  } 
+ 
+      return waveform;  
     },
     calculateBandwidth(bitPeriod, method) {
       const bitRate = 1000 / bitPeriod;
       let bandwidthValue;
       if (method === "NRZ" || method === "AMI") {
-        bandwidthValue = bitRate;
+        bandwidthValue = bitRate/2;
         return `${bandwidthValue.toFixed(2)} Hz (Low)`;
       } else if (method === "RZ") {
-        bandwidthValue = bitRate * 2;
-        return `${bandwidthValue.toFixed(2)} Hz (Medium)`;
+        bandwidthValue = bitRate * 2/2;
+        return `${bandwidthValue.toFixed(2)} Hz `;
       } else if (method === "Manchester" || method === "Differential Manchester") {
-        bandwidthValue = bitRate * 2;
-        return `${bandwidthValue.toFixed(2)} Hz (High)`;
-      }
+        bandwidthValue = bitRate * 2/2;
+        return `${bandwidthValue.toFixed(2)} Hz `;
+      }else if (method === "PAM4") {  
+        const symbolRate = 1 / (2 * (bitPeriod/1000000000000));  
+        return `${(0.5 * symbolRate).toExponential(2)} Hz  ( 26.66 GHz )`;  
+      }  
     },
     plusSlides(n) {
-      const total = 3;
+      const total = 4;
       this.currentSlide = (this.currentSlide + n + total) % total;
     },
     saveData() {
@@ -559,6 +672,7 @@ export default {
         alert("Binary data must contain only '0' and '1'. Please correct your input.");
         return;
       }
+      if (this.method !== 'PAM4') {
       if (isNaN(this.bitPeriod) || this.bitPeriod < 1 || this.bitPeriod > 1000) {
         alert("Bit Period must be a number between 1 and 1000 (ms).");
         return;
@@ -567,6 +681,7 @@ export default {
         alert("Voltage must be a number between 0.5 and 5 (V).");
         return;
       }
+    }
       const samplesPerBit = this.computeSamplesPerBit();
       this.waveform = this.generateLineCode(this.binaryData, this.method, this.bitPeriod, samplesPerBit);
       this.bandwidth = this.calculateBandwidth(this.bitPeriod, this.method);
@@ -575,113 +690,140 @@ export default {
       this.currentMethod = this.method;
       this.drawWaveform();
     },
-    drawWaveform() {
-      const canvas = this.$refs.canvas;
-      const ctx = canvas.getContext("2d");
-      const baseWidth = 900;
-      let extraWidth = 0;
-      if (this.binaryData.length > 10) {
-        extraWidth = (this.binaryData.length - 10) * 80;
-      }
-      canvas.width = baseWidth + extraWidth;
-      canvas.height = 400;
-      canvas.style.width = (baseWidth + extraWidth) + "px";
-      canvas.style.height = "400px";
-      if (!this.waveform.length || this.voltage == null || this.bitPeriod == null || !this.binaryData.length) {
-        console.error("Missing waveform, voltage, bitPeriod, or binaryData");
-        return;
-      }
-      const leftMargin = 80;
-      const rightMargin = 50;
-      const topMargin = 20;
-      const bottomMargin = 50;
-      const drawableWidth = canvas.width - leftMargin - rightMargin;
-      const drawableHeight = canvas.height - topMargin - bottomMargin;
-      const yCenter = topMargin + drawableHeight / 2;
-      const pixelsPerVolt = 30;
-      const samplesPerBit = this.waveform.length / this.binaryData.length;
-      const totalTime = this.binaryData.length * this.bitPeriod;
-      const xScale = drawableWidth / totalTime;
-      // Draw grid lines horizontally
-      for (let v = -this.voltage; v <= this.voltage; v++) {
-        const y = yCenter - v * pixelsPerVolt;
-        ctx.beginPath();
-        ctx.moveTo(leftMargin, y);
-        ctx.lineTo(canvas.width - rightMargin, y);
-        ctx.strokeStyle = "#ddd";
-        ctx.lineWidth = 1;
-        ctx.stroke();
-      }
-      // Draw vertical grid lines at bit boundaries
-      for (let i = 0; i <= this.binaryData.length; i++) {
-        const t = i * this.bitPeriod;
-        const x = leftMargin + t * xScale;
-        ctx.beginPath();
-        ctx.moveTo(x, topMargin);
-        ctx.lineTo(x, canvas.height - bottomMargin);
-        ctx.strokeStyle = "#ddd";
-        ctx.lineWidth = 1;
-        ctx.stroke();
-      }
-      // Draw axes
+    
+   drawWaveform() {
+    const canvas = this.$refs.canvas;
+    const ctx    = canvas.getContext('2d');
+    const isPAM4 = this.method === 'PAM4';
+
+    //--- resize & margins ---
+    const baseWidth = 900;
+    const extraWidth = this.binaryData.length > 10
+      ? (this.binaryData.length - 10) * 80
+      : 0;
+    canvas.width  = baseWidth + extraWidth;
+    canvas.height = 400;
+    canvas.style.width  = canvas.width  + 'px';
+    canvas.style.height = canvas.height + 'px';
+
+    const leftM   = 80;
+    const rightM  = 50;
+    const topM    = 20;
+    const botM    = 50;
+    const wDrawable = canvas.width  - leftM - rightM;
+    const hDrawable = canvas.height - topM  - botM;
+    const yCenter   = topM + hDrawable / 2;
+
+    //--- units & scales ---
+    const unitY = isPAM4 ? 'mV' : 'V';
+    const unitX = isPAM4 ? 'ps' : 'ms';
+    const durPerSymbol = isPAM4
+      ? this.bitPeriod * 2
+      : this.bitPeriod;
+    const symbolCount = isPAM4
+      ? Math.ceil(this.binaryData.length / 2)
+      : this.binaryData.length;
+
+    const pixelsPerUnit = 30;  // same vertical density for all
+    const xScale = wDrawable / (symbolCount * durPerSymbol);
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    //--- horizontal grid & voltage ticks ---
+ctx.font        = '12px Arial';
+ctx.strokeStyle = '#ddd';
+ctx.fillStyle   = '#000';
+
+// choose different tick arrays for PAM‑4 vs everything else
+const yTicks = isPAM4
+  ? [-5,-3, -1.5, 0, +1.5,+3, +5]
+  : // linear ticks from –voltage to +voltage
+    Array.from(
+      {length: 5},
+      (_, i) => -this.voltage + (i * 2*this.voltage/4)
+    );
+
+yTicks.forEach(v => {
+  const y = yCenter - v * pixelsPerUnit;
+  // grid line
+  ctx.beginPath();
+  ctx.moveTo(leftM,       y);
+  ctx.lineTo(canvas.width - rightM, y);
+  ctx.stroke();
+  // tick label
+    const extraShift = isPAM4 ? 10 : 0;
+
+  ctx.fillText(`${v.toFixed(2)} ${unitY}`, leftM - 40-extraShift, y + 4);
+});
+
+    //--- vertical grid & time ticks ---
+    for (let i = 0; i <= symbolCount; i++) {
+      const x = leftM + i * durPerSymbol * xScale;
       ctx.beginPath();
-      ctx.moveTo(leftMargin, topMargin);
-      ctx.lineTo(leftMargin, canvas.height - bottomMargin);
-      ctx.lineTo(canvas.width - rightMargin, canvas.height - bottomMargin);
-      ctx.strokeStyle = "black";
-      ctx.lineWidth = 1;
+      ctx.moveTo(x, topM);
+      ctx.lineTo(x, canvas.height - botM);
       ctx.stroke();
-      // Y-axis label
-      ctx.save();
-      ctx.translate(leftMargin - 50, topMargin + drawableHeight / 2);
-      ctx.rotate(-Math.PI / 2);
-      ctx.textAlign = "center";
-      ctx.font = "14px Arial";
-      ctx.fillText("Voltage (V)", 0, 0);
-      ctx.restore();
-      // X-axis label
-      ctx.save();
-      ctx.textAlign = "center";
-      ctx.font = "14px Arial";
-      ctx.fillText("Time (ms)", leftMargin + drawableWidth / 2, canvas.height - 10);
-      ctx.restore();
-      // Draw voltage markers and ticks
-      ctx.font = "12px Arial";
-      ctx.fillStyle = "black";
-      for (let v = -this.voltage; v <= this.voltage; v++) {
-        const y = yCenter - v * pixelsPerVolt;
-        ctx.fillText(`${v} V`, leftMargin - 30, y + 4);
-        ctx.beginPath();
-        ctx.moveTo(leftMargin - 5, y);
-        ctx.lineTo(leftMargin + 5, y);
-        ctx.stroke();
-      }
-      // Draw time markers
-      for (let i = 0; i <= this.binaryData.length; i++) {
-        const t = i * this.bitPeriod;
-        const x = leftMargin + t * xScale;
-        ctx.fillText(t.toFixed(2) + "ms", x, canvas.height - bottomMargin + 15);
-        ctx.beginPath();
-        ctx.moveTo(x, canvas.height - bottomMargin - 5);
-        ctx.lineTo(x, canvas.height - bottomMargin + 5);
-        ctx.stroke();
-      }
-      // Draw the waveform
-      ctx.beginPath();
-      for (let i = 0; i < this.waveform.length; i++) {
-        const time = i * (this.bitPeriod / samplesPerBit);
-        const x = leftMargin + time * xScale;
-        const y = yCenter - (this.waveform[i] * this.voltage) * pixelsPerVolt;
-        if (i === 0) {
-          ctx.moveTo(x, y);
-        } else {
-          ctx.lineTo(x, y);
-        }
-      }
-      ctx.strokeStyle = "black";
-      ctx.lineWidth = 2;
-      ctx.stroke();
-    },
+      ctx.fillText(
+        `${(i * durPerSymbol).toFixed(2)} ${unitX}`,
+        x - 15,
+        canvas.height - botM + 18
+      );
+    }
+
+    //--- axes lines ---
+    ctx.strokeStyle = '#000';
+    ctx.lineWidth   = 1;
+    ctx.beginPath();
+    ctx.moveTo(leftM, topM);
+    ctx.lineTo(leftM, canvas.height - botM);
+    ctx.lineTo(canvas.width - rightM, canvas.height - botM);
+    ctx.stroke();
+
+    //--- axis labels ---
+    // Y
+    ctx.save();
+    ctx.translate(leftM - 60, topM + hDrawable / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.textAlign = 'center';
+    ctx.font      = '14px Arial';
+    ctx.fillText(`Voltage (${unitY})`, 0, 0);
+    ctx.restore();
+    // X
+    ctx.save();
+    ctx.textAlign = 'center';
+    ctx.font      = '14px Arial';
+    ctx.fillText(
+      `Time (${unitX})`,
+      leftM + wDrawable / 2,
+      canvas.height - 10
+    );
+    ctx.restore();
+
+    //--- waveform itself ---
+    ctx.beginPath();
+    // how many samples per symbol
+    const samplesPerSymbol = this.waveform.length / symbolCount;
+    this.waveform.forEach((level, idx) => {
+      // time in your human units
+      const t = (idx / samplesPerSymbol) * durPerSymbol;
+      const x = leftM + t * xScale;
+   
+      const y = yCenter
+        - (this.method === 'PAM4'
+            ? level   // level already in mV
+            : level * this.voltage
+          )
+        * pixelsPerUnit;
+
+      idx === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    });
+    ctx.strokeStyle = '#000';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+  }
+
+      
+    ,
     openPdfDialog() {
       this.showPdfDialog = true;
     },
@@ -714,9 +856,17 @@ export default {
   currentY += 5;
   doc.text(`Method: ${this.method}`, 10, currentY);
   currentY += 5;
+  if (this.method === 'PAM4') {
+  // For PAM‑4 we treat bitPeriod as picoseconds and voltage as millivolts
+  doc.text(`Bit Period: ${this.bitPeriod} ps`, 10, currentY);
+  currentY += 5;
+  doc.text(`Voltage: ${this.voltage} mV`, 10, currentY);
+} else {
+  // Everything else stays in ms and V
   doc.text(`Bit Period: ${this.bitPeriod} ms`, 10, currentY);
   currentY += 5;
   doc.text(`Voltage: ${this.voltage} V`, 10, currentY);
+}
   currentY += 5;
   doc.text(`Bandwidth: ${this.bandwidth}`, 10, currentY);
   currentY += 5;

@@ -25,6 +25,7 @@
       <li>Unipolar </li>
       <li>Polar such as Differential Manchester</li>
       <li>Bipolar</li>
+      <li>Multilevel</li>
     </ul>
     <h2>Polar</h2>
     <p>In polar encoding two levels of voltage amplitude are used. </p>

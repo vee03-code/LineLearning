@@ -8,6 +8,7 @@ import RzPage from '@/components/RzPage.vue'
 import AmiPage from '@/components/AmiPage.vue'
 import ManchesterPage from '@/components/ManchesterPage.vue'
 import DiffManchesterPage from '@/components/DiffManchesterPage.vue'
+import Pam4Page from '@/components/Pam4Page.vue'
 import NotFound  from '@/components/NotFound.vue'
 
 export const routes = [
@@ -41,6 +42,11 @@ export const routes = [
     name: 'DiffManchester',
     component: DiffManchesterPage
   },
+  {
+  path: '/pam4',
+  name: 'PAM4',
+  component: Pam4Page
+},
   {
     path: '/:pathMatch(.*)*',      // matches ANY route not listed above
     name: 'NotFound',

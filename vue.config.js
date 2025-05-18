@@ -9,7 +9,7 @@ module.exports = defineConfig({
       baseURL: 'https://linelearning.pages.dev',                  
       // (2) Provide either `urls` for static paths…
       urls: [
-        '/', '/nrz', '/rz', '/ami', '/manchester', '/differential-manchester'
+        '/', '/nrz', '/rz', '/ami', '/manchester', '/differential-manchester','/pam4'
       ],
       // (3) Optionally control where the file is written (default = your dist/)
       // outputDir: 'dist',   // ← you can omit, uses Vue’s outputDir by default

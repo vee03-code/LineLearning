@@ -26,6 +26,7 @@
       <li>Unipolar </li>
       <li>Polar </li>
       <li>Bipolar such as AMI (Alternate Mark Inversion) </li>
+      <li>Multilevel</li>
     </ul>
     <h2>Bipolar</h2>
     <p>In Bipolar encoding, three types of different voltage level are used that is positive, negative and zero. </p>
