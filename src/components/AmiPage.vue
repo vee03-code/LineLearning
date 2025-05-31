@@ -19,13 +19,13 @@
       <li>Bandwidth compression</li>
       <li>Differential encoding</li>
       <li>Noise immunity</li>
-      <li>Minimum crosswalk</li>
+      <li>Minimum crosstalk</li>
     </ul>
     <h3>These are the most important types of line coding technique:</h3>
     <ul class="\list">
       <li>Unipolar </li>
       <li>Polar </li>
-      <li>Bipolar such as AMI (Alternate Mark Inversion) </li>
+      <li>Bipolar, Example: AMI (Alternate Mark Inversion) </li>
       <li>Multilevel</li>
     </ul>
     <h2>Bipolar</h2>

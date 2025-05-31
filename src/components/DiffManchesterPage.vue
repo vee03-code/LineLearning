@@ -18,12 +18,12 @@
       <li>Bandwidth compression</li>
       <li>Differential encoding</li>
       <li>Noise immunity</li>
-      <li>Minimum crosswalk</li>
+      <li>Minimum crosstalk</li>
     </ul>
     <h3>These are the most important types of line coding technique:</h3>
     <ul class="\list">
       <li>Unipolar </li>
-      <li>Polar such as Differential Manchester</li>
+      <li>Polar, Example: Differential Manchester</li>
       <li>Bipolar</li>
       <li>Multilevel</li>
     </ul>
@@ -37,7 +37,7 @@
       <ul class="list">
         <li>Self-Clocking and Synchronization: With a guaranteed mid-bit transition, Differential Manchester encoding inherently supports clock recovery. This consistent transition enables the receiver to remain synchronized with the incoming data stream, even during long strings of identical bits.</li>
         <li>No DC Component: Since each bit period contains both a positive and negative voltage, the average voltage over time is zero. This elimination of the DC component is especially beneficial for transmission channels that are AC-coupled or for systems where DC bias can cause issues.</li>
-        <li>Polarity Inversion Immunity: Because bit information is determined by transitions rather than absolute voltage levels, Differential Manchester is robust against polarity reversals. This makes the encoding less sensitive to signal inversion and other polarity-related distortions.</li>
+        <li>Polarity Inversion Immunity: Because bit information is determined by transitions rather than absolute voltage levels, Differential Manchester is robust against polarity reversals. This makes the encoding less sensitive to signal inversion and other polarity related distortions.</li>
         <li>Improved Error Detection: The extra transitions provide more opportunities for detecting timing errors or unexpected changes, which can be useful for error detection in noisy communication environments.</li>
       </ul>
       <h3>Disadvantages</h3>
@@ -49,7 +49,7 @@
       <h3>Use Cases</h3>
       <ul class="list">
         <li>Local Area Networks (LANs): Differential Manchester encoding has been used in network technologies where reliable clock recovery is critical. Its robustness against noise and polarity errors made it a strong candidate in early Ethernet implementations and other LAN protocols.</li>
-        <li>Digital Telecommunication Systems: In scenarios where maintaining synchronization and data integrity is essential especially over noisy channels Differential Manchester encoding’s self-clocking nature is highly beneficial.</li>
+        <li>Digital Telecommunication Systems: In scenarios where maintaining synchronization and data integrity is essential especially over noisy channels Differential Manchester encoding’s self clocking nature is highly beneficial.</li>
         <li>Legacy Systems and Specialized Applications: Although newer encoding schemes have become more common, Differential Manchester may still be found in legacy communication systems or specialized applications where its advantages outweigh the drawbacks of increased bandwidth and circuit complexity.</li>
       </ul>
 

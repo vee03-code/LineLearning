@@ -19,11 +19,11 @@
         <li>Bandwidth compression</li>
         <li>Differential encoding</li>
         <li>Noise immunity</li>
-        <li>Minimum crosswalk</li>
+        <li>Minimum crosstalk</li>
       </ul>
       <h3>These are the most important types of line coding technique:</h3>
       <ul class="\list">
-        <li>Unipolar such as NRZ (Non-Return-to-Zero)</li>
+        <li>Unipolar, Example: NRZ (Non-Return-to-Zero)</li>
         <li>Polar</li>
         <li>Bipolar</li>
         <li>Multilevel</li>

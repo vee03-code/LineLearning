@@ -19,12 +19,12 @@
       <li>Bandwidth compression</li>
       <li>Differential encoding</li>
       <li>Noise immunity</li>
-      <li>Minimum crosswalk</li>
+      <li>Minimum crosstalk</li>
     </ul>
     <h3>These are the most important types of line coding technique:</h3>
     <ul class="\list">
       <li>Unipolar </li>
-      <li>Polar such as Manchester</li>
+      <li>Polar, Example: Manchester</li>
       <li>Bipolar</li>
       <li>Multilevel</li>
     </ul>

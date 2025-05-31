@@ -72,7 +72,7 @@
         </div>  
         <p>
           Multilevel line coding uses more than two amplitude levels per symbol.
-          for example , PAM-4 encodes 2 bits per symbol.
+          for example , PAM4 uses 4 levels.
         </p>
         <p><strong>Example:</strong> PAM-4 (100Gbps per lane)</p> 
       </div>  
@@ -652,7 +652,7 @@ export default {
         return `${bandwidthValue.toFixed(2)} Hz `;
       }else if (method === "PAM4") {  
         const symbolRate = 1 / (2 * (bitPeriod/1000000000000));  
-        return `${(0.5 * symbolRate).toExponential(2)} Hz  ( 26.66 GHz )`;  
+        return `${(0.5 * symbolRate).toExponential(2)} Hz   ( 26.56 GHz )`;  
       }  
     },
     plusSlides(n) {

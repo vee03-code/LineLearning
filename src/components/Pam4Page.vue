@@ -17,7 +17,7 @@
       <h2>Introduction to Multilevel Line Coding</h2>
       <p>
         A <strong>multilevel (M‑ary) line code</strong> encodes digital data by mapping each group of
-        <code>log₂ M</code> input bits onto one of <code>M</code> distinct signal levels in the time domain waveform, transmitting <code>log₂M</code> bits per symbol interval instead of just
+        <code>log₂ M</code> input bits onto one of <code>M</code> distinct signal levels in the time domain waveform, transmitting <code>log₂M</code> bits per symbol instead of just
         1 bit as in binary schemes. Unlike binary (two‑level) line codes, multilevel schemes use
         three or more discrete voltage (or current) states to represent multiple bits at once,
         which reduces the required symbol (baud) rate for a given bit rate and improves spectral
@@ -66,7 +66,7 @@
 
       <h2>PAM4 in Fast Ethernet</h2>
       <p>
-        PAM4 is pivotal in modern Ethernet standards (e.g., IEEE 802.3bs for 400 G) enabling faster
+        PAM4 is pivotal in modern Ethernet standards (e.g., IEEE 802.3bs ) enabling faster
         data rates with fewer lanes compared to NRZ.
       </p>
 
@@ -164,7 +164,7 @@
       <p>
         Building on the original IEEE Std 802.3 standard first published in 1985, the IEEE Std 802.3df
         project is specifically engineered to address the needs of emerging hyperscale data centers
-        and large-language-model (LLM) machine-learning (ML) applications, promising significant
+        and Large Language Model (LLM) machine-learning (ML) applications, promising significant
         improvements in performance and scalability.
       </p>
 

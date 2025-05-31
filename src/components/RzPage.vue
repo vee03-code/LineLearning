@@ -19,12 +19,12 @@
       <li>Bandwidth compression</li>
       <li>Differential encoding</li>
       <li>Noise immunity</li>
-      <li>Minimum crosswalk</li>
+      <li>Minimum crosstalk</li>
     </ul>
     <h3>These are the most important types of line coding technique:</h3>
     <ul class="\list">
       <li>Unipolar </li>
-      <li>Polar such as RZ (Return-to-Zero)</li>
+      <li>Polar, Example: RZ (Return-to-Zero)</li>
       <li>Bipolar</li>
       <li>Multilevel</li>
     </ul>
@@ -33,7 +33,7 @@
     <p>The DC component issue of unipolar encoding is minimized, and the average voltage level on the line is decreased.</p>
     <h2>Return-to-Zero (RZ)</h2>
     <p>This encoding technique uses three different voltage levels to represent binary values. 
-      Bit 1 is used to represent positive voltage, bit 0 is used to represent negative voltage and zero voltage for none. During the second half of each bit, this signal enters a resting state (zero).</p>
+     positive voltage is used to represent bit 1, negative voltage is used to represent bit 0 . During the second half of each bit, this signal enters a resting state (zero).</p>
       <h3>Advantages</h3>
       <ul class="list">
         <li>Improved Clock Recovery: Since each bit interval includes a transition to zero, polar RZ provides inherent self-clocking. This frequent transition assists the receiver in maintaining proper synchronization, especially when long sequences of identical bits are transmitted.</li>
@@ -48,7 +48,7 @@
       <h3>Use Cases</h3>
       <ul class="list">
         <li>Systems Requiring Reliable Synchronization: The built-in clock recovery of polar RZ makes it suitable for systems where maintaining synchronization is critical, despite the increased bandwidth cost.</li>
-        <li>Environments with DC Coupling Issues: Applications that are sensitive to DC components—such as optical systems—can benefit from the low DC bias of polar RZ.</li>
+        <li>Environments with DC Coupling Issues: Applications that are sensitive to DC components (such as optical systems) can benefit from the low DC bias of polar RZ.</li>
         <li>Historical Applications: Although polar RZ has largely been replaced by more efficient encoding methods like Manchester and differential Manchester encoding, it may still be found in legacy systems or in niche applications where its specific properties are required.</li>
       </ul>
 
