@@ -8,9 +8,27 @@
         <span class="mac-dot dot-yellow"></span>
         <span class="mac-dot dot-green"></span>
       </div>
+      <!-- Slide 0: Overview -->
+<div class="mySlides fade" :style="{ display: currentSlide === 0 ? 'block' : 'none' }">
+  <div class="numbertext">1 / 5</div>
+  <div class="slide-content">
+    <div class="logoTitle">
+      <h2>Digital Signal Transmission Overview</h2>
+      <div class="slide-header">
+        <img src="@/assets/logo.png" alt="LineLearning Logo" class="slide-logo" />
+      </div>
+    </div>
+    <p><strong>Baseband Transmission:</strong> Sends digital signals directly without a carrier, using techniques such as line coding, block coding, and scrambling.</p>
+    <p><strong>Passband Transmission:</strong> Embeds data into a carrier signal by modulating its amplitude (ASK), frequency (FSK), or phase (PSK).</p>
+    <p><strong>Line coding</strong> converts a binary data stream into pulses or voltage levels for transmission. Its most common types are:
+      Unipolar, Polar, Bipolar, and Multilevel.
+    </p>
+  </div>
+</div>
+
       <!-- Slide 1: Unipolar -->
-      <div class="mySlides fade" :style="{ display: currentSlide === 0 ? 'block' : 'none' }">
-        <div class="numbertext">1 / 4</div>
+      <div class="mySlides fade" :style="{ display: currentSlide === 1 ? 'block' : 'none' }">
+        <div class="numbertext">2 / 5</div>
         <div class="slide-content">
           <div class="logoTitle">
             <h2>Unipolar</h2>
@@ -27,8 +45,8 @@
         </div>
       </div>
       <!-- Slide 2: Polar -->
-      <div class="mySlides fade" :style="{ display: currentSlide === 1 ? 'block' : 'none' }">
-        <div class="numbertext">2 / 4</div>
+      <div class="mySlides fade" :style="{ display: currentSlide === 2 ? 'block' : 'none' }">
+        <div class="numbertext">3 / 5</div>
         <div class="slide-content">
           <div class="logoTitle">
             <h2>Polar</h2>
@@ -44,8 +62,8 @@
         </div>
       </div>
       <!-- Slide 3: Bipolar -->
-      <div class="mySlides fade" :style="{ display: currentSlide === 2 ? 'block' : 'none' }">
-        <div class="numbertext">3 / 4</div>
+      <div class="mySlides fade" :style="{ display: currentSlide === 3 ? 'block' : 'none' }">
+        <div class="numbertext">4 / 5</div>
         <div class="slide-content">
           <div class="logoTitle">
             <h2>Bipolar</h2>
@@ -61,8 +79,8 @@
         </div>
       </div>
       <!-- Slide 4: Multilevel (PAM-4) -->  
-   <div class="mySlides fade" :style="{ display: currentSlide === 3 ? 'block' : 'none' }">  
-      <div class="numbertext">4 / 4</div>  
+   <div class="mySlides fade" :style="{ display: currentSlide === 4 ? 'block' : 'none' }">  
+      <div class="numbertext">5 / 5</div>  
       <div class="slide-content">  
         <div class="logoTitle">  
           <h2>Multilevel</h2>  
@@ -88,6 +106,7 @@
       <span class="dot" :class="{ active: currentSlide === 1 }" @click="currentSlide = 1"></span>
       <span class="dot" :class="{ active: currentSlide === 2 }" @click="currentSlide = 2"></span>
       <span class="dot" :class="{ active: currentSlide === 3 }" @click="currentSlide = 3"></span>  
+      <span class="dot" :class="{ active: currentSlide === 4 }" @click="currentSlide = 4"></span>  
 
     </div>
 
@@ -656,7 +675,7 @@ export default {
       }  
     },
     plusSlides(n) {
-      const total = 4;
+      const total = 5;
       this.currentSlide = (this.currentSlide + n + total) % total;
     },
     saveData() {

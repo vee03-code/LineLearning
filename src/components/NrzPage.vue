@@ -53,6 +53,7 @@
         <li>Data Storage Systems: Unipolar NRZ can be found in some types of data storage and simple digital signaling applications where the simplicity of the coding scheme outweighs its limitations.</li>
         <li>Short-Distance Communication: In systems where the transmission distance is short and the impact of baseline wander is minimal, unipolar NRZ can be an effective choice.</li>
       </ul>
+      
       </div>
      <router-link to="/" >Go Back</router-link>
 
@@ -60,6 +61,16 @@
      <div class="center">
     <div class="quiz-container">
       <h2>NRZ Quiz</h2>
+      <!-- Reminder Button -->
+<button class="reminder-btn" @click="showFlowchart = true">Reminder: View NRZ Flowchart</button>
+
+<!-- Modal Popup -->
+<div v-if="showFlowchart" class="modal-overlay" @click.self="showFlowchart = false">
+  <div class="modal-content">
+    <span class="close-btn" @click="showFlowchart = false">&times;</span>
+    <img src="@/assets/flowcharts/nrz-flowchart.png" alt="NRZ Flowchart" class="flowchart-image" />
+  </div>
+</div>
       <p>For each wave diagram below (encoded in NRZ), enter the corresponding 4-bit binary sequence:</p>
 
       <div v-if="currentQuizIndex < quizQuestions.length" class="flashcard">
@@ -89,6 +100,8 @@ export default {
   data() {
     return {
       // Quiz data:
+          showFlowchart: false,
+
       quizQuestions: [
         { img: require("@/assets/quiz/nrz/nrz-1010.png"), answer: "1010" },
         { img: require("@/assets/quiz/nrz/nrz-0101.png"), answer: "0101" },
@@ -328,4 +341,59 @@ export default {
   justify-content: center;
   align-content: center;
 }
+.reminder-btn {
+  margin-bottom: 1rem;
+  padding: 8px 14px;
+  font-size: 1rem;
+  background: linear-gradient(90deg, #80bb82 0%, #5aa45d 100%);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.reminder-btn:hover {
+  background: linear-gradient(90deg, #43a047 0%, #2c6f30 100%);
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+  position: relative;
+  text-align: center;
+}
+
+.close-btn {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.flowchart-image {
+  max-width: 70%;
+  height: auto;
+  margin-top: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
 </style>
