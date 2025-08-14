@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <!-- SLIDESHOW CONTAINER -->
-    <div class="slideshow-container">
+    <div class="slideshow-container desktop-only">
       <!-- Mac-style top-left circles -->
       <div class="mac-window-controls">
         <span class="mac-dot dot-red"></span>
@@ -101,7 +101,7 @@
     </div>
     <br />
     <!-- The dots/circles -->
-    <div style="text-align: center">
+    <div style="text-align: center" class="desktop-only">
       <span class="dot" :class="{ active: currentSlide === 0 }" @click="currentSlide = 0"></span>
       <span class="dot" :class="{ active: currentSlide === 1 }" @click="currentSlide = 1"></span>
       <span class="dot" :class="{ active: currentSlide === 2 }" @click="currentSlide = 2"></span>
@@ -112,7 +112,7 @@
 
     <!-- VISUALIZER SECTION -->
     <div class="visualizer">
-      <h1>Line Coding Techniques Visualizer</h1>
+      <h1>Line Coding Techniques Simulator</h1>
       <div class="top-controls">
        <div class="input-group">
   <!-- Label container -->
@@ -1416,6 +1416,9 @@ button{
 
 
 @media (max-width: 768px) {
+  .desktop-only{
+    display: none !important;
+  }
    .ui-btn {
     font-size: 14px;         
     padding: 8px 12px;  
@@ -1505,6 +1508,9 @@ button{
 
 /* Even smaller screens (e.g., max-width: 480px) */
 @media (max-width: 480px) {
+  .desktop-only{
+    display: none !important;
+  }
   .slide-content {
     padding: 0.1rem;
   }
