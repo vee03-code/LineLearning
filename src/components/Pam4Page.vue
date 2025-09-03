@@ -20,7 +20,7 @@
         <code>log₂ M</code> input bits onto one of <code>M</code> distinct signal levels in the time domain waveform, transmitting <code>log₂M</code> bits per symbol instead of just
         1 bit as in binary schemes. Unlike binary (two‑level) line codes, multilevel schemes use
         three or more discrete voltage (or current) states to represent multiple bits at once,
-        which reduces the required symbol (baud) rate for a given bit rate and improves spectral
+        which reduces the required symbol rate for a given bit rate and improves spectral
         (bandwidth) efficiency.
       </p>
 
@@ -51,11 +51,7 @@
             <td>Mandatory RS(544,514,15) with 4‑way interleaving</td>
             <td>Optional or mandatory vendor‑specific error correction</td>
           </tr>
-          <tr>
-            <td>Voltage Levels</td>
-            <td>Defined by PMD/PMA specs (e.g., ±5 mV for copper)</td>
-            <td>Implementation‑dependent</td>
-          </tr>
+          
           <tr>
             <td>PCS Processing</td>
             <td>Mandatory 64B/66B encoding, scrambling, alignment</td>
@@ -95,30 +91,13 @@
         codes with 4‑way interleaving.
       </p>
 
-      <h2>Advantages and Disadvantages of PAM4 100 Gbps</h2>
-      <h3>Advantages</h3>
-      <ul>
-        <li>Double the data rate per symbol compared to NRZ (2 bits vs 1 bit).</li>
-        <li>Reduced bandwidth requirements for a given bit rate.</li>
-        <li>Enables higher data rates with fewer lanes and less cabling complexity.</li>
-      </ul>
-      <h3>Disadvantages</h3>
-      <ul>
-        <li>Intrinsic ≈ 9.5 dB SNR penalty increases sensitivity to noise.</li>
-        <li>Necessitates complex FEC and advanced signal processing.</li>
-        <li>Increased implementation complexity requiring careful equalization and clock recovery.</li>
-        <li>Generally higher power consumption due to signal integrity compensation.</li>
-      </ul>
-
+      
       <h2>PAM4 100 Gbps: The Building Block of IEEE 802.3df</h2>
       <p>
-        PAM4 100 Gbps is the modulation scheme used in IEEE 802.3df to achieve the desired data rates.
-        By using PAM4 100 Gbps, the standard can support higher data rates while maintaining compatibility
-        with existing infrastructure.
+       PAM4 at 100 Gb/s per lane is the modulation scheme that enables IEEE 802.3df to reach 800 Gb/s (8×100G) and 1.6 Tb/s (16×100G) Ethernet. By encoding 2 bits per symbol at 53.125 GBd, PAM4 supports very high data rates while still operating over electrical and optical channels designed for high-speed Ethernet.
       </p>
       <p>
-        Once PAM4 100 Gbps is implemented, the next step is to apply standardized processing and
-        PCS/PMA enhancements to ensure reliable transmission. This includes:
+        Before the signal is modulated into PAM4 in the PMD, the digital data stream undergoes a series of standardized PCS/PMA processing steps to ensure reliable transmission:
       </p>
       <ol>
         <li><strong>64B/66B Encoding</strong>: Adds synchronization headers to maintain bit alignment and DC balance with overhead.</li>
